@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+	
+			html, body, div, span, applet, object, iframe,
+			h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+			a, abbr, acronym, address, big, cite, code,
+			del, dfn, em, img, ins, kbd, q, s, samp,
+			small, strike, strong, sub, sup, tt, var,
+			b, u, i, center,
+			dl, dt, dd, ol, ul, li,
+			fieldset, form, label, legend,
+			table, caption, tbody, tfoot, thead, tr, th, td,
+			article, aside, canvas, details, embed, 
+			figure, figcaption, footer, header, hgroup, 
+			menu, nav, output, ruby, section, summary,
+			time, mark, audio, video {
+				margin: 0 0 12px 0;
+				padding: 0;
+				border: 0;
+				vertical-align: baseline;
+			}
+
+			article, aside, details, figcaption, figure, 
+			footer, header, hgroup, menu, nav, section {
+				display: block;
+			}
+			
+			ol, ul {
+				list-style: disc;
+				margin-left:1.4em;
+			}
+			blockquote, q {
+				quotes: none;
+			}
+			blockquote:before, blockquote:after,
+			q:before, q:after {
+				content: '';
+				content: none;
+			}
+			table {
+				border-collapse: collapse;
+				border-spacing: 0;
+			}
+			
+			* { font-family:font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', YuGothic, 'Yu Gothic Medium', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif; font-size:16px; line-height: 20px; }
+
+			h1 { font-size:26px; font-weight:bold; line-height: 30px; }
+			h2 { font-size:24px; font-weight:bold; line-height: 28px; }
+			h3 { font-size:22px; font-weight:bold; line-height: 26px; }
+			h4 { font-size:20px; font-weight:bold; line-height: 24px; }
+			h5 { font-size:18px; font-weight:bold; line-height: 22px; }
+			h6 { font-size:16px; font-weight:bold; line-height: 20px; }
+			
+			.container {
+				width:90%;
+				max-width:1280px;
+				margin:24px auto 14px auto;
+			}
+			
+			li {
+				margin-bottom:8px;
+			}
+			
+			a { color:#00F; }
+			
+			
+		</style>
+	</head>
+	<body>
+		<script>
+		
+			var list = [
+				{
+					"url":"https://magpcss.org/ceforum/viewtopic.php?f=6&t=12564#p24103",
+					"title":"Single-process mode is not tested or supported. Don't use it."
+				},
+				{
+					"url":"https://bitbucket.org/chromiumembedded/cef/issues/2700/cef-high-memory-usage-when-offscreen",
+					"title":"Cef high memory usage when offscreen rendering with gpu and webgl"
+				}
+			]
+		
+			var ul = ["ul"];
+				
+			for(var k=0; k<list.length; k++) {
+				ul.push(["li",["a",{"href":list[k].url},list[k].title]]);
+			}
+				
+			var data = [
+					["div",{"class":"container"},
+					["h1","CEF"],
+					ul
+				]
+			];		
+			
+			//console.log(JSON.stringify(data));
+		
+			!function(e,n){"object"==typeof exports?module.exports=n():"function"==typeof define&&define.amd?define(n):e.crel=n()}(this,function(){function e(){var o,a=arguments,p=a[0],m=a[1],x=2,v=a.length,b=e[f];if(p=e[c](p)?p:d.createElement(p),1===v)return p;if((!l(m,t)||e[u](m)||s(m))&&(--x,m=null),v-x===1&&l(a[x],"string")&&void 0!==p[r])p[r]=a[x];else for(;v>x;++x)if(o=a[x],null!=o)if(s(o))for(var g=0;g<o.length;++g)y(p,o[g]);else y(p,o);for(var h in m)if(b[h]){var N=b[h];typeof N===n?N(p,m[h]):p[i](N,m[h])}else p[i](h,m[h]);return p}var n="function",t="object",o="nodeType",r="textContent",i="setAttribute",f="attrMap",u="isNode",c="isElement",d=typeof document===t?document:{},l=function(e,n){return typeof e===n},a=typeof Node===n?function(e){return e instanceof Node}:function(e){return e&&l(e,t)&&o in e&&l(e.ownerDocument,t)},p=function(n){return e[u](n)&&1===n[o]},s=function(e){return e instanceof Array},y=function(n,t){e[u](t)||(t=d.createTextNode(t)),n.appendChild(t)};return e[f]={},e[c]=p,e[u]=a,"undefined"!=typeof Proxy&&(e.proxy=new Proxy(e,{get:function(n,t){return!(t in e)&&(e[t]=e.bind(null,t)),e[t]}})),e});
+
+			var parse = function(b) {
+				for(var k=0; k<b.length; k++) {
+					if(Array.isArray(b[k])) b[k] = parse(b[k]);
+				}
+				return crel.apply({},b);				
+			}
+				
+			if(Array.isArray(data)) {			
+				for(var k=0; k<data.length; k++) {
+					if(Array.isArray(data[k])) {						
+						crel(document.body,parse(data[k]));
+					}
+				}
+			}
+		
+		</script>
+	</body>
+</html>
