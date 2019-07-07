@@ -23,7 +23,6 @@
 				padding: 0;
 				border: 0;
 				vertical-align: baseline;
-				font-feature-settings:"palt";
 			}
 
 			article, aside, details, figcaption, figure, 
@@ -48,7 +47,7 @@
 				border-spacing: 0;
 			}
 			
-			* { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', YuGothic, 'Yu Gothic Medium', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif; font-size:16px; line-height: 24px; }
+			* { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', YuGothic, 'Yu Gothic Medium', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif; font-size:16px; line-height: 24px; font-feature-settings:"palt"; }
 
 			h1 { font-size:26px; font-weight:bold; line-height: 34px; }
 			h2 { font-size:24px; font-weight:bold; line-height: 32px; }
@@ -73,20 +72,29 @@
 			
 			a { color:#00F; }
 			
-			li pre {
+			pre {
 				background-color:#000;
-				color:#FFF;
+				color:#DDD;
 				padding:8px;
 				margin-top:7px;
 				overflow-x:scroll;
 				line-height: 1.25em;
 			}
 			
+			code {
+				background-color:#CEF;
+				padding:1px 3px;
+			}
+			
 			pre code {
-				font-size:12px; 
+				font-size:13px; 
 				font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;;
 				line-height: inherit;
+				padding:0;
+				background-color:transparent;
 			} 
+			
+			
 			
 			
 		</style>
@@ -94,17 +102,22 @@
 	<body>
 		<script>
 		
-			var cmake = ["ul"];
-			cmake.push(["li","CMakeのWhere to build the binarieasはWhere is the source codeと同じにしておく"]);
-			cmake.push(["li","XCodeのBuild Settingsでフルパスになっているところを \"$(SRCROOT)/\" に変更する"]);
-			cmake.push(["li","XCodeのBuild PhasesのCMake PostBuild Rulesを削除して、Run Scripを追加して以下を設定する",["br"],["pre",["code",
+		
+		
+			var buildsettings = ["ul"];
+			buildsettings.push(["li","CMakeの",["code","Where to build the binarieas"],"は",["code","Where is the source code"],"と同じにしておく"]);
+			buildsettings.push(["li","XCodeのBuild Settingsでフルパスになっているところを",["code","$(SRCROOT)/"],"に変更する"]);
+			buildsettings.push(["li","XCodeのBuild PhasesのCMake PostBuild Rulesを削除して、Run Scripを追加して以下を設定する",["br"],["pre",["code",
 				"mkdir -p ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks\ncp -n -R ${BUILT_PRODUCTS_DIR}/../../../Release/cefclient\ Helper.app ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/cefclient\ Helper.app | true\ncp -n -R ${BUILT_PRODUCTS_DIR}/../../../Release/Chromium\ Embedded\ Framework.framework ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/Chromium\ Embedded\ Framework.framework | true"
 			]]]);
 			
-			
-			
+			var args = ["pre",["code",
+				"int argc = 4;\nconst char *argv[argc] = {[[[NSProcessInfo processInfo] arguments][0] UTF8String],\"--use-mock-keychain\",\"--enable-media-stream\",\"--disable-gpu-compositing\"};"
+			]];
 
-
+			var sandbox = ["ul"];
+			sandbox.push(["li","App SandboxにあるHardwearのCameraとMicrophoneにチェックを入れる"]);
+			sandbox.push(["li","plistの",["code","Privacy - Camera Usage Description"],"と",["code","Privacy - Microphone Usage Description"],"を追加する"]);
 		
 			var list = [
 			
@@ -143,9 +156,22 @@
 			var data = [
 					["div",{"class":"container"},
 					["h1","CEF"],
+					["p",["a",{"href":"https://bitbucket.org/chromiumembedded/cef/commits/2c92fcd3cdf1983adc25bd7806886c9e07a7375b?at=3770"},"07330"]],
 					["h6","Build Settings"],
-					cmake,
-					["h6","課題"],
+					buildsettings,
+					["h6","Sandbox"],
+					sandbox,
+					["h6","Command line arguments"],
+					args,
+					["h6","CefSettings"],
+					["pre",["code",
+						"CefSettings settings;\nsettings.windowless_rendering_enabled = true;\nCefString(&settings.cache_path) = cache_path;"
+					]],
+					["h6","CefBrowserSettings"],
+					["pre",["code",
+						"CefBrowserSettings browserSettings;\nbrowserSettings.web_security = STATE_ENABLED;\nbrowserSettings.webgl = STATE_ENABLED;\nbrowserSettings.plugins = STATE_ENABLED;\nbrowserSettings.javascript = STATE_ENABLED;\nbrowserSettings.windowless_frame_rate = 30;"
+					]],
+					["h6","Reference"],
 					ref
 				]
 			];		
