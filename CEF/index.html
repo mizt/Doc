@@ -19,10 +19,11 @@
 			figure, figcaption, footer, header, hgroup, 
 			menu, nav, output, ruby, section, summary,
 			time, mark, audio, video {
-				margin: 0 0 12px 0;
+				margin: 0 0 18px 0;
 				padding: 0;
 				border: 0;
 				vertical-align: baseline;
+				font-feature-settings:"palt";
 			}
 
 			article, aside, details, figcaption, figure, 
@@ -47,14 +48,14 @@
 				border-spacing: 0;
 			}
 			
-			* { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', YuGothic, 'Yu Gothic Medium', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif; font-size:16px; line-height: 20px; }
+			* { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', YuGothic, 'Yu Gothic Medium', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif; font-size:16px; line-height: 24px; }
 
-			h1 { font-size:26px; font-weight:bold; line-height: 30px; }
-			h2 { font-size:24px; font-weight:bold; line-height: 28px; }
-			h3 { font-size:22px; font-weight:bold; line-height: 26px; }
-			h4 { font-size:20px; font-weight:bold; line-height: 24px; }
-			h5 { font-size:18px; font-weight:bold; line-height: 22px; }
-			h6 { font-size:16px; font-weight:bold; line-height: 20px; }
+			h1 { font-size:26px; font-weight:bold; line-height: 34px; }
+			h2 { font-size:24px; font-weight:bold; line-height: 32px; }
+			h3 { font-size:22px; font-weight:bold; line-height: 30px; }
+			h4 { font-size:20px; font-weight:bold; line-height: 28px; }
+			h5 { font-size:18px; font-weight:bold; line-height: 26px; }
+			h6 { font-size:16px; font-weight:bold; line-height: 24px; }
 			
 			.container {
 				width:90%;
@@ -62,11 +63,30 @@
 				margin:24px auto 14px auto;
 			}
 			
+			ul {
+				margin-bottom:23px;
+			}
+			
 			li {
-				margin-bottom:8px;
+				margin-bottom:5px;
 			}
 			
 			a { color:#00F; }
+			
+			li pre {
+				background-color:#000;
+				color:#FFF;
+				padding:8px;
+				margin-top:7px;
+				overflow-x:scroll;
+				line-height: 1.25em;
+			}
+			
+			pre code {
+				font-size:12px; 
+				font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;;
+				line-height: inherit;
+			} 
 			
 			
 		</style>
@@ -74,7 +94,21 @@
 	<body>
 		<script>
 		
+			var cmake = ["ul"];
+			cmake.push(["li","CMakeのWhere to build the binarieasはWhere is the source codeと同じにしておく"]);
+			cmake.push(["li","XCodeのBuild Settingsでフルパスになっているところを \"$(SRCROOT)/\" に変更する"]);
+			cmake.push(["li","XCodeのBuild PhasesのCMake PostBuild Rulesを削除して、Run Scripを追加して以下を設定する",["br"],["pre",["code",
+				"mkdir -p ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks\ncp -n -R ${BUILT_PRODUCTS_DIR}/../../../Release/cefclient\ Helper.app ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/cefclient\ Helper.app | true\ncp -n -R ${BUILT_PRODUCTS_DIR}/../../../Release/Chromium\ Embedded\ Framework.framework ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/Chromium\ Embedded\ Framework.framework | true"
+			]]]);
+			
+			
+			
+
+
+		
 			var list = [
+			
+				
 			
 				{
 					"url":"https://bitbucket.org/chromiumembedded/cef/issues?status=new&status=open",
@@ -98,16 +132,21 @@
 				}
 			]
 		
-			var ul = ["ul"];
+		
+		
+			var ref = ["ul"];
 				
 			for(var k=0; k<list.length; k++) {
-				ul.push(["li",["a",{"href":list[k].url},list[k].title]]);
+				ref.push(["li",["a",{"href":list[k].url},list[k].title]]);
 			}
 				
 			var data = [
 					["div",{"class":"container"},
 					["h1","CEF"],
-					ul
+					["h6","Build Settings"],
+					cmake,
+					["h6","課題"],
+					ref
 				]
 			];		
 			
