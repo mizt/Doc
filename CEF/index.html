@@ -114,6 +114,8 @@
 			var args = ["pre",["code",
 				"const int argc = 4;\nconst char *argv[argc] = {[[[NSProcessInfo processInfo] arguments][0] UTF8String],\"--use-mock-keychain\",\"--enable-media-stream\",\"--disable-gpu-compositing\"};"
 			]];
+			
+			var codesigning = ["p",["a",{"href":"https://mediaarea.net/blog/2018/02/14/QtWebEngine-MacAppStore"},"Using QtWebEngine on the Mac App Store"]];
 
 			var sandbox = ["ul"];
 			sandbox.push(["li","App SandboxにあるHardwearのCameraとMicrophoneにチェックを入れる"]);
@@ -176,6 +178,7 @@
 						"CefBrowserSettings browserSettings;\nbrowserSettings.web_security = STATE_ENABLED;\nbrowserSettings.webgl = STATE_ENABLED;\nbrowserSettings.plugins = STATE_ENABLED;\nbrowserSettings.javascript = STATE_ENABLED;\nbrowserSettings.windowless_frame_rate = 30;"
 					]],
 					["h6","Code Signing"],
+					codesigning,
 					["h6","Reference"],
 					ref
 				]
