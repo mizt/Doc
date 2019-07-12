@@ -121,14 +121,8 @@
 			sandbox.push(["li","App SandboxにあるHardwearのCameraとMicrophoneにチェックを入れる"]);
 			sandbox.push(["li","plistの",["code","Privacy - Camera Usage Description"],"と",["code","Privacy - Microphone Usage Description"],"を追加する"]);
 		
-			var list = [
+			var issue = [
 			
-				
-			
-				{
-					"url":"https://bitbucket.org/chromiumembedded/cef/issues?status=new&status=open",
-					"title":"課題"
-				},
 				{
 					"url":"https://magpcss.org/ceforum/viewtopic.php?f=6&t=16215&hilit=mac+app+store",
 					"title":"CEF Support sandbox on macOS now, what about Mac App Store?"
@@ -153,10 +147,10 @@
 		
 		
 		
-			var ref = ["ul"];
+			var issues = ["ul"];
 				
-			for(var k=0; k<list.length; k++) {
-				ref.push(["li",["a",{"href":list[k].url},list[k].title]]);
+			for(var k=0; k<issue.length; k++) {
+				issues.push(["li",["a",{"href":issue[k].url},issue[k].title]]);
 			}
 				
 			var data = [
@@ -182,7 +176,10 @@
 					["h6","Code Signing"],
 					codesigning,
 					["h6","Reference"],
-					ref
+					["p",["a",{"href":"https://bitbucket.org/chromiumembedded/cef/issues?status=new&status=open"},"課題"]],
+					issues,
+					["p",["a",{"href":"https://stackoverflow.com/questions/39774729/cef-build-from-source-generate-xcode-project"},"cef build from source : generate xcode project"]]
+
 				]
 			];		
 			
