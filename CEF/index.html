@@ -94,6 +94,10 @@
 				background-color:transparent;
 			} 
 			
+			li pre {
+				margin-bottom:0;
+			} 
+			
 			
 			
 			
@@ -110,16 +114,19 @@
 			buildsettings.push(["li","XCodeのBuild PhasesのCMake PostBuild Rulesを削除して、Run Scripを追加して以下を設定する",["br"],["pre",["code",
 				"mkdir -p ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks\ncp -n -R ${BUILT_PRODUCTS_DIR}/../../../Release/cefclient\ Helper.app ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/cefclient\ Helper.app | true\ncp -n -R ${BUILT_PRODUCTS_DIR}/../../../Release/Chromium\ Embedded\ Framework.framework ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/Chromium\ Embedded\ Framework.framework | true"
 			]]]);
+			buildsettings.push(["li","Overriding Deprecated Objective-C Methodsを",["code","NO"],"に変更する"]);
+
 			
 			var args = ["pre",["code",
 				"const int argc = 4;\nconst char *argv[argc] = {[[[NSProcessInfo processInfo] arguments][0] UTF8String],\"--use-mock-keychain\",\"--enable-media-stream\",\"--disable-gpu-compositing\"};"
 			]];
 			
-			var codesigning = ["p",["a",{"href":"https://mediaarea.net/blog/2018/02/14/QtWebEngine-MacAppStore"},"Using QtWebEngine on the Mac App Store"]];
+			var codesigning = ["p",["a",{"href":"https://mediaarea.net/blog/2018/02/14/QtWebEngine-MacAppStore"},"Using QtWebEngine on the Mac App Store"],["br"],["a",{"href":"https://doc.qt.io/qt-5/qtwebengine-platform-notes.html#macos"},"Even if work is done to bypass the App Store's restrictions, that would not guarantee correct behavior of the library."]];
 
-			var sandbox = ["ul"];
-			sandbox.push(["li","App SandboxにあるHardwearのCameraとMicrophoneにチェックを入れる"]);
-			sandbox.push(["li","plistの",["code","Privacy - Camera Usage Description"],"と",["code","Privacy - Microphone Usage Description"],"を追加する"]);
+			var entitlements = ["ul"];
+			entitlements.push(["li","App SandboxにあるHardwearのCameraとMicrophoneにチェックを入れる"]);
+			entitlements.push(["li","plistの",["code","Privacy - Camera Usage Description"],"と",["code","Privacy - Microphone Usage Description"],"を追加する"]);
+						
 		
 			var issue = [
 			
@@ -159,10 +166,13 @@
 					["p",
 						["a",{"href":"https://bitbucket.org/chromiumembedded/cef/commits/2c92fcd3cdf1983adc25bd7806886c9e07a7375b?at=3770"},"3770"],["br"],
 						["a",{"href":"https://bitbucket.org/chromiumembedded/cef/wiki/MasterBuildQuickStart.md#markdown-header-mac-os-x-setup"},"Mac OS X Setup"]],
+					["pre",["code",
+						"cd ~/code/chromium_git/chromium/src\nninja -C out/Release_GN_x64 cef"
+					]],
 					["h6","Build Settings"],
 					buildsettings,
-					["h6","Sandbox"],
-					sandbox,
+					["h6","Entitlements"],
+					entitlements,
 					["h6","Command line arguments"],
 					args,
 					["h6","CefSettings"],
@@ -175,11 +185,22 @@
 					]],
 					["h6","Code Signing"],
 					codesigning,
+					["h6","Options"],
+					["pre",["code",
+						"\"ffmpeg_branding\":\"Chrome\",\n\"proprietary_codecs\":True"
+					]],
+					["p",["code","def GetRequiredArgs():"]," in /code/chromium/src/cef/tools/gn_args.py"],
+					["h6","Distribution"],
+					["pre",["code",
+						"$ cd /Users/imfinity/-dir/chromium/src/cef/tools\n$ ./make_distrib.sh --ninja-build --x64-build"
+					]],
+					["p","/code/chromium_git/chromium/src/cef/binary_distrib/"],
 					["h6","Reference"],
 					["p",["a",{"href":"https://bitbucket.org/chromiumembedded/cef/issues?status=new&status=open"},"課題"]],
 					issues,
-					["p",["a",{"href":"https://stackoverflow.com/questions/39774729/cef-build-from-source-generate-xcode-project"},"cef build from source : generate xcode project"]]
-
+					["p",["a",{"href":"https://stackoverflow.com/questions/39774729/cef-build-from-source-generate-xcode-project"},"cef build from source : generate xcode project"]],
+					["h6","WKWebView"],
+					["p","Offscreen rendering is not supported.",["br"],["a",{"href":"https://github.com/WebKit/webkit/blob/master/Source/WebKit/UIProcess/API/Cocoa/WKWebView.mm#L1150"},"Software snapshot will not capture elements rendered with hardware acceleration (WebGL, video, etc)."]],
 				]
 			];		
 			
